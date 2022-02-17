@@ -6,6 +6,7 @@ const typeDefs = gql`
     favNum: Int
     price: Float
     isCool: Boolean
+    pets: [String!]!
   }
 `;
 
@@ -15,6 +16,7 @@ const resolvers = {
     favNum: () => 13,
     price: () => 9.99,
     isCool: () => true,
+    pets: () => ["Peepa", "Moonie"],
   },
 };
 
