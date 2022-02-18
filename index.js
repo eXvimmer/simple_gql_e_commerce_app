@@ -4,6 +4,7 @@ const { products } = require("./db");
 const typeDefs = gql`
   type Query {
     products: [Product!]!
+    product(id: ID!): Product
   }
 
   """
@@ -14,6 +15,7 @@ const typeDefs = gql`
     description: String!
     quantity: Int!
     price: Float!
+    image: String!
     onSale: Boolean!
   }
 `;
@@ -21,6 +23,8 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     products: () => products,
+    // product: (parent, args, context, info) => {},
+    product: (_, { id }) => products.find(p => p.id === id),
   },
 };
 
