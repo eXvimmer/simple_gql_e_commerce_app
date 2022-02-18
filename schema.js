@@ -6,6 +6,7 @@ const typeDefs = gql`
     product(id: ID!): Product
     categories: [Category!]!
     category(id: ID!): Category
+    reviews: [Review!]!
   }
 
   """
@@ -20,6 +21,7 @@ const typeDefs = gql`
     image: String!
     onSale: Boolean!
     category: Category
+    reviews: [Review!]!
   }
 
   """
@@ -29,6 +31,15 @@ const typeDefs = gql`
     id: ID!
     name: String!
     products: [Product!]!
+  }
+
+  type Review {
+    id: ID!
+    date: String!
+    title: String!
+    comment: String!
+    rating: Int!
+    productId: ID!
   }
 `;
 
