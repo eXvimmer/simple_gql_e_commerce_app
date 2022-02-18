@@ -288,4 +288,6 @@ const reviews = [
 
 module.exports = {
   products,
+  reviews,
+  categories,
 };
