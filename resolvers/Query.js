@@ -1,10 +1,8 @@
-const { products, categories } = require("../db");
-
 const Query = {
-  products: () => products,
-  product: (_, { id }) => products.find(p => p.id === id),
-  categories: () => categories,
-  category: (_, { id }) => categories.find(c => c.id === id),
+  products: (_, a, { products }) => products,
+  product: (_, { id }, { products }) => products.find(p => p.id === id),
+  categories: (_, a, { categories }) => categories,
+  category: (_, { id }, { categories }) => categories.find(c => c.id === id),
 };
 
 module.exports = { Query };
