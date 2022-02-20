@@ -22,7 +22,7 @@ const Category = {
       }
     }
 
-    return "onSale" in filter
+    return filter && "onSale" in filter
       ? prods.filter(p => p.onSale === filter.onSale)
       : prods;
   },
