@@ -1,7 +1,30 @@
 const Category = {
-  products: ({ id: categoryId }, { filter }, { products }) => {
-    const prods = products.filter(p => p.categoryId == categoryId);
-    return filter ? prods.filter(p => p.onSale === filter.onSale) : prods;
+  products: ({ id: categoryId }, { filter }, { products, reviews }) => {
+    let prods = products.filter(p => p.categoryId == categoryId);
+
+    if (filter) {
+      if (
+        "avgRating" in filter &&
+        [1, 2, 3, 4, 5].includes(filter.avgRating)
+      ) {
+        prods = prods.filter(p => {
+          let sumRating = 0,
+            numReviews = 0;
+          reviews.forEach(r => {
+            if (r.productId === p.id) {
+              sumRating += r.rating;
+              numReviews++;
+            }
+          });
+          const avgProdcutRating = sumRating / numReviews;
+          return avgProdcutRating >= filter.avgRating;
+        });
+      }
+    }
+
+    return "onSale" in filter
+      ? prods.filter(p => p.onSale === filter.onSale)
+      : prods;
   },
 };
 
