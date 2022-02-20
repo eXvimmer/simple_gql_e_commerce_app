@@ -9,6 +9,10 @@ const typeDefs = gql`
     reviews: [Review!]!
   }
 
+  type Mutation {
+    addCategory(input: AddCategoryInput!): Category!
+  }
+
   """
   a type that describes a product
   """
@@ -45,6 +49,13 @@ const typeDefs = gql`
   input ProductsFilterInput {
     onSale: Boolean
     avgRating: Int
+  }
+
+  input AddCategoryInput {
+    """
+    the name of the new category
+    """
+    name: String!
   }
 `;
 
