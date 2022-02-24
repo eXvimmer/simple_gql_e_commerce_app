@@ -78,6 +78,11 @@ const Mutation = {
     db.reviews = db.reviews.filter(r => r.productId !== id);
     return true;
   },
+
+  deleteReview: (_, { id }, { db }) => {
+    db.reviews = db.reviews.filter(r => r.id !== id);
+    return true;
+  },
 };
 
 module.exports = {
