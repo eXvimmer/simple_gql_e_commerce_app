@@ -83,6 +83,16 @@ const Mutation = {
     db.reviews = db.reviews.filter(r => r.id !== id);
     return true;
   },
+
+  updateCategory: (_, { id, input }, { db }) => {
+    const c = db.categories.find(c => c.id === id);
+    if (c) {
+      c.name = input.name ? input.name : c.name;
+      return c;
+    }
+
+    return null;
+  },
 };
 
 module.exports = {
