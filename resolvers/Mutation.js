@@ -93,6 +93,32 @@ const Mutation = {
 
     return null;
   },
+
+  updateProduct: (_, { id, input }, { db }) => {
+    const p = db.products.find(p => p.id === id);
+    if (p) {
+      for (let k in input) {
+        if (k in p) {
+          p[k] = input[k] ? input[k] : p[k];
+        }
+      }
+      return p;
+    }
+    return null;
+  },
+
+  updateReview: (_, { id, input }, { db }) => {
+    const r = db.reviews.find(r => r.id === id);
+    if (r) {
+      for (let k in input) {
+        if (k in r) {
+          r[k] = input[k] ? input[k] : r[k];
+        }
+      }
+      return r;
+    }
+    return null;
+  },
 };
 
 module.exports = {
