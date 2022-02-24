@@ -72,6 +72,12 @@ const Mutation = {
     });
     return true;
   },
+
+  deleteProduct: (_, { id }, { db }) => {
+    db.products = db.products.filter(p => p.id !== id);
+    db.reviews = db.reviews.filter(r => r.productId !== id);
+    return true;
+  },
 };
 
 module.exports = {
