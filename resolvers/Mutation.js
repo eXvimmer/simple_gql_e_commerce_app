@@ -1,8 +1,8 @@
 const { v4: uuid } = require("uuid");
 
 const Mutation = {
-  addCategory: (_, { input: { name } }, { categories }) => {
-    const c = categories.find(c => c.name === name);
+  addCategory: (_, { input: { name } }, { db }) => {
+    const c = db.categories.find(c => c.name === name);
     if (c) {
       return c;
     }
@@ -12,7 +12,7 @@ const Mutation = {
       name,
     };
 
-    categories.push(newCategory);
+    db.categories.push(newCategory);
 
     return newCategory;
   },
@@ -22,7 +22,7 @@ const Mutation = {
     {
       input: { name, description, quantity, price, onSale, image, categoryId },
     },
-    { products }
+    { db }
   ) => {
     // TODO: check if categoryId exists
     const newProduct = {
@@ -35,14 +35,14 @@ const Mutation = {
       image,
       categoryId,
     };
-    products.push(newProduct);
+    db.products.push(newProduct);
     return newProduct;
   },
 
   addReview: (
     _,
     { input: { date, title, comment, rating, productId } },
-    { reviews }
+    { db }
   ) => {
     const newReview = {
       id: uuid(),
@@ -53,9 +53,24 @@ const Mutation = {
       productId,
     };
 
-    reviews.push(newReview);
+    db.reviews.push(newReview);
 
     return newReview;
+  },
+
+  deleteCategory: (_, { id }, { db }) => {
+    db.categories = db.categories.filter(c => c.id != id);
+    db.products = db.products.map(p => {
+      if (p.categoryId === id) {
+        return {
+          ...p,
+          categoryId: null,
+        };
+      } else {
+        return p;
+      }
+    });
+    return true;
   },
 };
 

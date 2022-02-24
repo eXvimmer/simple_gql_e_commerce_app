@@ -1,6 +1,6 @@
 const Query = {
-  products: (_, { filter }, { products, reviews }) => {
-    let prods = products;
+  products: (_, { filter }, { db }) => {
+    let prods = db.products;
     if (filter) {
       if (
         "avgRating" in filter &&
@@ -9,7 +9,7 @@ const Query = {
         prods = prods.filter(p => {
           let sumRating = 0,
             numReviews = 0;
-          reviews.forEach(r => {
+          db.reviews.forEach(r => {
             if (r.productId === p.id) {
               sumRating += r.rating;
               numReviews++;
@@ -26,9 +26,9 @@ const Query = {
     }
     return prods;
   },
-  product: (_, { id }, { products }) => products.find(p => p.id === id),
-  categories: (_, _a, { categories }) => categories,
-  category: (_, { id }, { categories }) => categories.find(c => c.id === id),
+  product: (_, { id }, { db }) => db.products.find(p => p.id === id),
+  categories: (_, _a, { db }) => db.categories,
+  category: (_, { id }, { db }) => db.categories.find(c => c.id === id),
 };
 
 module.exports = { Query };

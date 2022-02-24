@@ -286,8 +286,10 @@ const reviews = [
   },
 ];
 
-module.exports = {
+const db = {
   products,
   reviews,
   categories,
 };
+
+module.exports = { db };
